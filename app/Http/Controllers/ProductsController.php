@@ -55,7 +55,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -66,7 +66,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.edit', compact('product', 'id'));
     }
 
     /**
@@ -75,10 +76,20 @@ class ProductsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
-        //
+       $product = Product::find($id);
+
+        $this->validate(request(), [
+            'name' => 'required',
+            'price' => 'required|numeric'
+        ]);
+        $product->name = $request->get('name');
+        $product->price = $request->get('price');
+        $product->save();
+        return redirect('products')->with('success','Product has been updated');
     }
 
     /**
