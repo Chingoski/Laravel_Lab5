@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-   return view('test_view');
-});
+//Route::group(['prefix' => 'products'], function (){
+//    Route::get('/create', 'ProductsController@create');
+//});
+
+Route::resource('products', 'ProductsController');
